@@ -21,6 +21,9 @@ vagrant up
 vagrant ssh
 codex    # OpenAI Codex
 claude   # Claude Code
+
+# When you are done
+vagrant down
 ```
 
 ## What's Included
@@ -57,6 +60,24 @@ For extra safety, you can switch to one-way sync (host → VM only) by editing t
 config.vm.synced_folder ".", "/app", type: "rsync"
 ```
 
+## Git Commit Signing
+
+If you have SSH commit signing configured on your host, it works automatically in the VM via SSH agent forwarding:
+
+1. **Your signing key** is read from `git config` during `vagrant up`
+2. **SSH agent forwarding** connects to your host's SSH agent
+3. **When you commit**, the signing request is forwarded to your host
+
+Works with any SSH agent: standard `ssh-agent`, 1Password, Secretive, etc.
+
+**What gets passed to the VM:**
+- `user.signingkey` - your SSH public key for signing
+- `user.name` and `user.email` - your Git identity
+
+**Security:**
+- Only public key strings are passed (no files mounted from home)
+- Private keys never leave your host machine
+
 ## Safety Notes
 
 The VM isolates the operating system, **not your code**. The AI assistant can still:
@@ -73,7 +94,7 @@ The sandbox prevents:
 
 ## Attribution
 
-Based on [Running Codex CLI Securely with Vagrant](https://www.burzomir.pl/posts/ai-vm-coding-agent) by Emil Burzo.
+Inspired by [Running Codex CLI Securely with Vagrant](https://www.burzomir.pl/posts/ai-vm-coding-agent) by Emil Burzo.
 
 ## License
 

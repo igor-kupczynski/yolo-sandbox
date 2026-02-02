@@ -16,10 +16,22 @@
 # Safety note:
 # - The VM isolates the OS, not your repo. Destructive actions still affect /app.
 
+# Read git config from host (runs during vagrant up, on host machine)
+def read_git_config(key)
+  `git config --global #{key} 2>/dev/null`.strip
+rescue
+  ""
+end
+
+git_signing_key = read_git_config("user.signingkey")
+git_user_name = read_git_config("user.name")
+git_user_email = read_git_config("user.email")
+
 vm_name = File.basename(Dir.getwd)
 
 Vagrant.configure("2") do |config|
   config.vm.box = "bento/ubuntu-24.04"
+  config.ssh.forward_agent = true
 
   # Uncomment if you need to expose a port from the VM to your host.
   # config.vm.network "forwarded_port", guest: 3000, host: 3000, auto_correct: true
@@ -50,6 +62,10 @@ apt-get install -y --no-install-recommends \
   nodejs npm \
   python3 python3-venv python3-pip pipx \
   docker.io
+
+# Preserve SSH agent socket for sudo operations (needed for SSH agent forwarding)
+echo 'Defaults env_keep += "SSH_AUTH_SOCK"' > /etc/sudoers.d/ssh_auth_sock
+chmod 0440 /etc/sudoers.d/ssh_auth_sock
 
 GO_VERSION=$(curl -fsSL https://go.dev/VERSION?m=text | head -n1)
 GO_ARCH=$(dpkg --print-architecture)
@@ -93,6 +109,23 @@ if command -v delta >/dev/null 2>&1; then
   sudo -u vagrant -H git config --global interactive.diffFilter "delta --color-only"
   sudo -u vagrant -H git config --global delta.navigate true
 fi
+
+# Git commit signing with SSH (for 1Password agent forwarding)
+# Values read from host's git config during vagrant up
+SIGNING_KEY="#{git_signing_key}"
+GIT_NAME="#{git_user_name}"
+GIT_EMAIL="#{git_user_email}"
+
+if [ -n "$SIGNING_KEY" ]; then
+  sudo -u vagrant -H git config --global gpg.format ssh
+  sudo -u vagrant -H git config --global user.signingkey "$SIGNING_KEY"
+  sudo -u vagrant -H git config --global commit.gpgsign true
+  sudo -u vagrant -H git config --global tag.gpgsign true
+  echo "Git signing configured with key: $SIGNING_KEY"
+fi
+
+[ -n "$GIT_NAME" ] && sudo -u vagrant -H git config --global user.name "$GIT_NAME"
+[ -n "$GIT_EMAIL" ] && sudo -u vagrant -H git config --global user.email "$GIT_EMAIL"
 
 ZSH_IN_DOCKER_VERSION="1.2.0"
 
