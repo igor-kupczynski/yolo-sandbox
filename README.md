@@ -95,7 +95,7 @@ The sandbox prevents:
 
 ## Attribution
 
-Inspired by [Running Codex CLI Securely with Vagrant](https://www.burzomir.pl/posts/ai-vm-coding-agent) by Emil Burzo.
+Inspired by [Running Claude Code Dangerously, Safely](https://blog.emilburzo.com/2026/01/running-claude-code-dangerously-safely/) by Emil Burzo.
 
 ## License
 
