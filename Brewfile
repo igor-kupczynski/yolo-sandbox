@@ -1,3 +1,2 @@
-tap "hashicorp/tap"
-brew "hashicorp/tap/hashicorp-vagrant"
+cask "vagrant"
 cask "virtualbox"
