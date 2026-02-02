@@ -19,8 +19,8 @@ vagrant up
 
 # SSH in and use your AI assistant
 vagrant ssh
-codex    # OpenAI Codex
-claude   # Claude Code
+yolo-codex   # codex --yolo
+yolo-claude  # claude --dangerously-skip-permissions
 
 # When you are done
 vagrant down

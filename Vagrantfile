@@ -178,6 +178,8 @@ fi
 
 alias ll='ls -alF'
 alias gs='git status -sb'
+alias yolo-claude='claude --dangerously-skip-permissions'
+alias yolo-codex='codex --yolo'
 
 if command -v batcat >/dev/null 2>&1; then
   alias cat='batcat'
