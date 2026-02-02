@@ -167,6 +167,7 @@ if ! grep -q "Codex VM niceties" /home/vagrant/.zshrc 2>/dev/null; then
 export EDITOR=vim
 export VISUAL=vim
 export PAGER=less
+export COLORTERM=truecolor
 export POWERLEVEL9K_DISABLE_CONFIGURATION_WIZARD=true
 export PATH="/usr/local/go/bin:$HOME/.npm-global/bin:$HOME/.local/bin:$PATH"
 
