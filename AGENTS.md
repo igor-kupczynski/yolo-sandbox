@@ -5,6 +5,7 @@ This repository provides a Vagrant-based sandbox for running AI coding assistant
 - `Makefile` - Common tasks (`make help` for list)
 
 ## Features
+- **`yolo-claude` and `yolo-codex` aliases** - Run AI assistants in fully autonomous mode
 - **SSH agent forwarding** - Your host's SSH agent works inside the VM for authentication and commit signing
 - Git signing key and user identity are auto-configured from host's `git config`
 - Global gitignore patterns are copied from host

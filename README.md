@@ -4,6 +4,13 @@ Run [Codex](https://github.com/openai/codex) and [Claude Code](https://github.co
 
 AI coding assistants with terminal access are powerful but can execute destructive commands. This project provides a Vagrant-based sandbox that isolates the operating system while keeping your code accessible.
 
+## Features
+
+- **`yolo-claude` and `yolo-codex` aliases** - Run AI assistants in fully autonomous mode
+- **SSH agent forwarding** - Your host's SSH agent works inside the VM for authentication and commit signing
+- **Git identity auto-configured** - `user.name`, `user.email`, and `user.signingkey` are read from host
+- **Global gitignore** - Your host's gitignore patterns are copied to the VM
+
 ## Quick Start
 
 ```bash
