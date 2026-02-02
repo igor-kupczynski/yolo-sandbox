@@ -104,7 +104,10 @@ if ! command -v delta >/dev/null 2>&1; then
 fi
 
 sudo -u vagrant -H bash -lc "npm config set prefix /home/vagrant/.npm-global"
-sudo -u vagrant -H bash -lc "npm install -g @openai/codex @anthropic-ai/claude-code typescript ts-node --no-audit --no-fund"
+sudo -u vagrant -H bash -lc "npm install -g @openai/codex typescript ts-node --no-audit --no-fund"
+
+# Install Claude Code
+sudo -u vagrant -H bash -lc "curl -fsSL https://claude.ai/install.sh | bash"
 
 if [ ! -x /home/vagrant/.local/bin/uv ]; then
   sudo -u vagrant -H bash -lc "pipx install uv"
