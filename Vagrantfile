@@ -1,3 +1,5 @@
+require 'base64'
+
 # Codex/Claude Code VM sandbox (macOS-friendly).
 #
 # Quick start:
@@ -26,6 +28,14 @@ end
 git_signing_key = read_git_config("user.signingkey")
 git_user_name = read_git_config("user.name")
 git_user_email = read_git_config("user.email")
+
+# Read global gitignore from host (runs during vagrant up)
+git_ignore_path = `git config --global core.excludesfile 2>/dev/null`.strip
+git_ignore_path = File.expand_path(git_ignore_path) unless git_ignore_path.empty?
+git_ignore_content_b64 = ""
+if !git_ignore_path.empty? && File.exist?(git_ignore_path)
+  git_ignore_content_b64 = Base64.strict_encode64(File.read(git_ignore_path))
+end
 
 vm_name = File.basename(Dir.getwd)
 
@@ -126,6 +136,15 @@ fi
 
 [ -n "$GIT_NAME" ] && sudo -u vagrant -H git config --global user.name "$GIT_NAME"
 [ -n "$GIT_EMAIL" ] && sudo -u vagrant -H git config --global user.email "$GIT_EMAIL"
+
+# Global gitignore (base64 encoded, read from host during vagrant up)
+GIT_IGNORE_B64="#{git_ignore_content_b64}"
+if [ -n "$GIT_IGNORE_B64" ]; then
+  echo "$GIT_IGNORE_B64" | base64 -d > /home/vagrant/.gitignore_global
+  chown vagrant:vagrant /home/vagrant/.gitignore_global
+  sudo -u vagrant -H git config --global core.excludesfile /home/vagrant/.gitignore_global
+  echo "Global gitignore configured"
+fi
 
 ZSH_IN_DOCKER_VERSION="1.2.0"
 

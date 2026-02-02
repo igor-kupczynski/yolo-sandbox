@@ -73,6 +73,7 @@ Works with any SSH agent: standard `ssh-agent`, 1Password, Secretive, etc.
 **What gets passed to the VM:**
 - `user.signingkey` - your SSH public key for signing
 - `user.name` and `user.email` - your Git identity
+- `core.excludesfile` content - your global gitignore patterns
 
 **Security:**
 - Only public key strings are passed (no files mounted from home)

@@ -7,6 +7,7 @@ This repository provides a Vagrant-based sandbox for running AI coding assistant
 ## Features
 - **SSH agent forwarding** - Your host's SSH agent works inside the VM for authentication and commit signing
 - Git signing key and user identity are auto-configured from host's `git config`
+- Global gitignore patterns are copied from host
 
 ## Commands
 
