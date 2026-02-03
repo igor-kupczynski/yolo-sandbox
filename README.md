@@ -4,6 +4,15 @@ Run [Codex](https://github.com/openai/codex) and [Claude Code](https://github.co
 
 AI coding assistants with terminal access are powerful but can execute destructive commands. This project provides a Vagrant-based sandbox that isolates the operating system while keeping your code accessible.
 
+## Prerequisites
+
+**Host OS:** macOS (uses Homebrew for dependency installation)
+
+For Linux or Windows users:
+- Install [Vagrant](https://developer.hashicorp.com/vagrant/downloads) and [VirtualBox](https://www.virtualbox.org/wiki/Downloads) manually
+- Skip `./setup.sh` and configure your global gitignore by hand
+- The Vagrantfile itself is cross-platform
+
 ## Features
 
 - **`yolo-claude` and `yolo-codex` aliases** - Run AI assistants in fully autonomous mode
@@ -11,7 +20,14 @@ AI coding assistants with terminal access are powerful but can execute destructi
 - **Git identity auto-configured** - `user.name`, `user.email`, and `user.signingkey` are read from host
 - **Global gitignore** - Your host's gitignore patterns are copied to the VM
 
-## Quick Start
+## Usage
+
+There are two ways to use this project:
+
+1. **Copy Vagrantfile to your project** (recommended) - keeps the sandbox isolated per-project
+2. **Run in-place** - clone this repo and work directly in it for testing or development
+
+### Quick Start
 
 ```bash
 # One-time setup (installs Vagrant, VirtualBox, configures gitignore)
@@ -30,7 +46,7 @@ yolo-codex   # codex --yolo
 yolo-claude  # claude --dangerously-skip-permissions
 
 # When you are done
-vagrant down
+vagrant halt
 ```
 
 ## What's Included
@@ -66,6 +82,12 @@ For extra safety, you can switch to one-way sync (host → VM only) by editing t
 ```ruby
 config.vm.synced_folder ".", "/app", type: "rsync"
 ```
+
+**Note:** With rsync, sync is one-way (host → VM) and not automatic. You must run:
+- `vagrant rsync` - manual one-time sync
+- `vagrant rsync-auto` - watch for changes and sync continuously
+
+Changes made inside the VM will not sync back to the host with rsync.
 
 ## Git Commit Signing
 

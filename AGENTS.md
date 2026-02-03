@@ -16,6 +16,6 @@ This repository provides a Vagrant-based sandbox for running AI coding assistant
     make validate   # Validate Vagrantfile and lint setup.sh
 
 ## Rules of engagement
-- Run `make validate` on any changes to `Vagrantfile` or `setup.sh`.
-- Make sure README.md and AGENTS.md are up-to-date with any code changes. 
+- Run `make validate` on any changes to `Vagrantfile` or `setup.sh`. Note: requires `shellcheck` installed (`brew install shellcheck`).
+- Make sure README.md and AGENTS.md are up-to-date with any code changes.
 - This is a shared and open source project, don't add or commit any secrets or private information.
