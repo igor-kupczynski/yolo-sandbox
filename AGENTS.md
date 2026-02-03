@@ -14,8 +14,9 @@ This repository provides a Vagrant-based sandbox for running AI coding assistant
 
     make setup      # Run setup.sh
     make validate   # Validate Vagrantfile and lint setup.sh
+    make validate VAGRANT_VALIDATE_FLAGS=--ignore-provider  # Validate without provider checks (CI)
 
 ## Rules of engagement
-- Run `make validate` on any changes to `Vagrantfile` or `setup.sh`. Note: requires `shellcheck` installed (`brew install shellcheck`).
+- Run `make validate` on any changes to `Vagrantfile` or `setup.sh`. Note: requires `shellcheck` installed (`brew install shellcheck`). Use `VAGRANT_VALIDATE_FLAGS=--ignore-provider` in CI or environments without a provider.
 - Make sure README.md and AGENTS.md are up-to-date with any code changes.
 - This is a shared and open source project, don't add or commit any secrets or private information.

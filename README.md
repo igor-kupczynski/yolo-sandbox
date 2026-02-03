@@ -49,6 +49,18 @@ yolo-claude  # claude --dangerously-skip-permissions
 vagrant halt
 ```
 
+## Validation
+
+```bash
+make validate
+```
+
+If your environment does not have a Vagrant provider (for example in CI), run:
+
+```bash
+make validate VAGRANT_VALIDATE_FLAGS=--ignore-provider
+```
+
 ## What's Included
 
 The VM comes pre-configured with:

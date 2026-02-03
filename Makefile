@@ -1,3 +1,5 @@
+VAGRANT_VALIDATE_FLAGS ?=
+
 .PHONY: help setup validate
 
 help: ## Show this help
@@ -7,5 +9,5 @@ setup: ## Run setup.sh (install dependencies, configure gitignore)
 	./setup.sh
 
 validate: ## Validate Vagrantfile syntax and lint setup.sh
-	vagrant validate
+	vagrant validate $(VAGRANT_VALIDATE_FLAGS)
 	shellcheck setup.sh
